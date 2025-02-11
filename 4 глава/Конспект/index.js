@@ -187,3 +187,54 @@ alert( Symbol.keyFor(sym2) ); // id
 // -------------------------------------------------------------------------------
 
 
+// Хинты, 3 варианта ---> string, number, default
+
+// Этапы преобразования объекта в примитивы
+// 1. Вызвать obj[Symbol.toPrimitive](hint) – метод с символьным ключом Symbol.toPrimitive (системный символ), если такой метод существует,
+// 2. Иначе, если хинт равен "string"
+// попробовать вызвать obj.toString() или obj.valueOf(), смотря какой из них существует.
+// 3. Иначе, если хинт равен "number" или "default"
+// попробовать вызвать obj.valueOf() или obj.toString(), смотря какой из них существует.
+
+// Пример
+
+let user = {
+  name: "John",
+  money: 1000,
+
+  [Symbol.toPrimitive](hint) {
+    alert(`hint: ${hint}`);
+    return hint == "string" ? `{name: "${this.name}"}` : this.money;
+  }
+};
+
+// демонстрация результатов преобразований:
+alert(user); // hint: string -> {name: "John"}
+alert(+user); // hint: number -> 1000
+alert(user + 500); // hint: default -> 1500
+
+
+// По умолчанию обычный объект имеет следующие методы toString и valueOf:
+// Метод toString возвращает строку "[object Object]".
+// Метод valueOf возвращает сам объект.
+
+let user = {name: "John"};
+alert(user); // [object Object]
+alert(user.valueOf() === user); // true
+
+let user = {
+  name: "John",
+  money: 1000,
+  // для хинта равного "string"
+  toString() {
+    return `{name: "${this.name}"}`;
+  },
+  // для хинта равного "number" или "default"
+  valueOf() {
+    return this.money;
+  }
+
+};
+alert(user); // toString -> {name: "John"}
+alert(+user); // valueOf -> 1000
+alert(user + 500); // valueOf -> 1500
