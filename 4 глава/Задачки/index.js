@@ -1,4 +1,4 @@
-
+// Задачки с learn.js
 const createObj = () => {
     const user = {}
     user.name = 'John'
@@ -113,3 +113,52 @@ function Accumulator(startingValue) {
 // accumulator.read();
 // accumulator.read();
 // alert(accumulator.value);
+
+
+
+// Задачки с maxcode.dev
+
+///// 1 ///// 
+// Функция incrementAge принимает объект с информацией о человеке, в том числе его возраст (поле age).
+//Нужно вернуть новый объект такого же формата, где возраст будет увеличен на 1. Исходный объкет не должен измениться.
+
+// ДАНО
+const person = {
+    name: "Joe",
+    age: 82,
+    gender: "male",
+}; 
+console.log(incrementAge(person));
+// РЕШЕНИЕ
+function incrementAge(person) {
+    return {
+        ...person,
+        age: person.age + 1
+    }
+}
+
+///// 2 /////
+// Дан массив с информацией о командах разработки. Верните список имен всех разработчиков (член команды с ролью "developer"), отсортированных в лексикографическом порядке (по алфавиту).
+
+// ДАНО
+const teams = [
+    {
+      name: "1",
+      members: [
+        { name: "Alice", role: "developer" },
+        { name: "Bob", role: "designer" },
+      ],
+    },
+    {
+      name: "2",
+      members: [
+        { name: "Carol", role: "developer" },
+        { name: "Dave", role: "qa" },
+      ],
+    },
+  ];
+  
+  console.log(findDevelopers(teams)); // ["Alice", "Carol"]
+
+// РЕШЕНИЕ
+
