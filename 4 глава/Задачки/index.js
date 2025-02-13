@@ -344,6 +344,7 @@ console.log(calcOfAnnualSalary(employees))
 console.log(isAnagram("bacd", "cdab")); // true
 console.log(isAnagram("aaabbaaa", "aaaaaabb")); // true
 console.log(isAnagram("ababa", "babab")); // false
+console.log(isAnagram("", "")); // true
 
 function isAnagram(str1, str2) {
     if (!str1.length && !str2.length) return true
@@ -369,4 +370,83 @@ function isAnagram(str1, str2) {
       if (obj1[char] !== obj2[char]) return false
       return true
     }
+}
+
+///// 8 /////
+
+// В этой задаче требуется отсортировать массив. Трансформируйте объект в массив. Пары ключ-значение должны быть отсортированы по ключу в лексикографическом порядке (по алфавиту).
+
+const obj = {
+  name: 'Jeremy',
+  age: 24,
+  role: 'Software Engineer',
+};
+
+// [
+//   ["age", 24],
+//   ["name", "Jeremy"],
+//   ["role", "Software Engineer"],
+// ]
+
+const convertHashToArray = (obj) => {
+  const sortedArray = Object.keys(obj).sort()
+  return sortedArray.map(key => {
+    return [key, obj[key]]
+  })
+}
+
+console.log(convertHashToArray(obj));
+
+///// 9 /////
+
+// Вам дан объект, содержащий языки и результаты теста для каждого языка.
+// Верните список языков с результатами не ниже 60 баллов, отсортированных по убыванию результата.
+// Если по нескольким языкам набрано одинаковое количество баллов, между собой они должны быть отсортированы в лексикографическом порядке (по алфавиту по возрастанию).
+
+function myLanguages(results) {
+  return Object.keys(results).filter(key => results[key] >= 60).sort((a, b) => results[b] - results[a])
+}
+
+console.log(myLanguages({
+  "Java": 10,
+  "Ruby": 80,
+  "Python": 65,
+})); // ["Ruby", "Python"]
+
+console.log(myLanguages({
+  "Hindi": 60,
+  "Dutch" : 93,
+  "Greek": 71,
+})); // ["Dutch", "Greek", "Hindi"]
+
+console.log(myLanguages({
+  "C++": 50,
+  "ASM": 10,
+  "Haskell": 20,
+})); // []
+
+///// 10 /////
+
+// Отсортируйте массив строк по убыванию максимального количества последовательно идущих гласных в строке. Гласными считаются символы aeiouAEIOU.
+
+const words = ["WOOED", "euouae", "Beautiful", "queueing", "Acquaintance"];
+
+function sortStringsByVowels(strings) {
+  const vowelLetters = {a,e,i,o,u,A,E,I,O,U}
+  const numberOfVowels = {}
+  for (let word of strings) {
+    let count = 0 
+    for (let i = 0; i < word.length; i++) {
+      if (word[i] in vowelLetters) count++
+      if (i + 1 !== word.length && word[i + 1] in vowelLetters) {
+        count++
+        i++
+      }
+      if (word[i] in vowelLetters === false) {
+        numberOfVowels[word] = count
+        count = 0
+      }
+    }
+  }
+  return numberOfVowels
 }
