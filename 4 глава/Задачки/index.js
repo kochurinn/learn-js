@@ -397,28 +397,158 @@ console.log(myLanguages({
   "Haskell": 20,
 })); // []
 
+
 ///// 9 /////
 
-// Отсортируйте массив строк по убыванию максимального количества последовательно идущих гласных в строке. Гласными считаются символы aeiouAEIOU.
+// Реализуйте функцию template, которая позволяет шаблонизировать произвольную строку, подставляя в нее значения из словаря.
 
-const words = ["WOOED", "euouae", "Beautiful", "queueing", "Acquaintance"];
+console.log(template(
+  `Купить {size}-комнатную квартиру в городе {city} за {price} млн рублей`,
+  { size: 2, city: "Тверь", price: 7 },
+)); //  "Купить 2-комнатную квартиру в городе Тверь за 7 млн рублей"
 
-function sortStringsByVowels(strings) {
-  const vowelLetters = {a,e,i,o,u,A,E,I,O,U}
-  const numberOfVowels = {}
-  for (let word of strings) {
-    let count = 0 
-    for (let i = 0; i < word.length; i++) {
-      if (word[i] in vowelLetters) count++
-      if (i + 1 !== word.length && word[i + 1] in vowelLetters) {
-        count++
-        i++
-      }
-      if (word[i] in vowelLetters === false) {
-        numberOfVowels[word] = count
-        count = 0
+console.log(template(
+  `Купить {size}-комнатную квартиру в городе {city} за {price} млн рублей`,
+  { size: 2, price: 7 },
+)); //  "Купить 2-комнатную квартиру в городе {city} за 7 млн рублей"
+
+console.log(template(
+  `Купить {size}-комнатную квартиру в городе {city} за {price} млн рублей`,
+  {},
+)); //  "Купить {size}-комнатную квартиру в городе {city} за {price} млн рублей"
+
+function template(str, dict) {
+  let newStr = ''
+  let key = ''
+  let isKey = false
+  for (let char of str) {
+    if (char !== '{' && !isKey) {
+      newStr += char
+      continue
+    }
+    if (char === '{') {
+      isKey = !isKey
+      continue
+    }
+    if (char === '}') {
+      if (key in dict) {
+        newStr += dict[key]
+        isKey = !isKey
+        key = ''
+        continue
+      } else {
+        newStr += `{${key}}`
+        isKey = !isKey
+        key = ''
+        continue
       }
     }
+    if (isKey) {
+      key += char
+    }
   }
-  return numberOfVowels
+  console.log(newStr, key)
+}
+
+///// 10 /////
+
+// Дан массив чисел. Необходимо вернуть новый массив, в котором останутся только те числа, которые повторялись более одного раза.
+// В итоговом массиве числа должны в том же порядке, в котором они были в исходном массиве.
+
+const numbers = [10, 5, 1, 2, 5, 3, 2, 1, 5, 8];
+console.log(nonUniqueNumbers(numbers));
+//  [5, 1, 2, 5, 2, 1, 5];
+
+function nonUniqueNumbers(numbers) {
+  const numberOfDigits = {}
+  for (let num of numbers) {
+    if (!numberOfDigits[num]) {
+      numberOfDigits[num] = 1
+      continue
+    }
+    numberOfDigits[num]++
+  }
+  return numbers.filter(num => numberOfDigits[num] > 1)
+}
+
+///// 11 /////
+
+// Дан список фильмов, отсортированных по популярности. Фильмов может быть произвольное количество. Каждый фильм имеет определенный жанр.
+// Реализуйте функцию filterMovies(movies, limit), которая оставит не более limit фильмов каждого жанра. Функция возвращает массив из названий фильмов.
+// Для каждого жанра мы оставляем те фильмы, которые находятся в рейтинге выше. В ответе отфильтрованные фильмы должны идти в том же порядке, в каком они шли в исходном рейтинге.
+
+const movies = [
+  {
+    "title": "The Godfather",
+    "genre": "Drama"
+  },
+  {
+    "title": "Dilwale Dulhania Le Jayenge",
+    "genre": "Comedy"
+  },
+  {
+    "title": "The Shawshank Redemption",
+    "genre": "Drama"
+  },
+  {
+    "title": "Impossible Things",
+    "genre": "Family"
+  },
+  {
+    "title": "The Godfather Part II",
+    "genre": "Drama"
+  },
+  {
+    "title": "Schindler's List",
+    "genre": "Drama"
+  },
+  {
+    "title": "Life Is Beautiful",
+    "genre": "Comedy"
+  },
+];
+
+console.log(filterMovies(movies, 1));
+const output1 = [
+  'The Godfather',                // ← Drama #1
+  'Dilwale Dulhania Le Jayenge',  // ← Comedy #1
+  'Impossible Things',            // ← Family #1
+];
+
+console.log(filterMovies(movies, 2));
+const output2 = [
+  'The Godfather',                // ← Drama #1
+  'Dilwale Dulhania Le Jayenge',  // ← Comedy #1
+  'The Shawshank Redemption',     // ← Drama #2
+  'Impossible Things',            // ← Family #1
+  'Life Is Beautiful',            // ← Comedy #2
+];
+
+console.log(filterMovies(movies, 3));
+const output3 = [
+  'The Godfather',                // ← Drama #1
+  'Dilwale Dulhania Le Jayenge',  // ← Comedy #1
+  'The Shawshank Redemption',     // ← Drama #2
+  'Impossible Things',            // ← Family #1
+  'The Godfather Part II',        // ← Drama #3
+  'Life Is Beautiful',            // ← Comedy #2
+];
+
+
+function filterMovies(movies, limit) {
+  const genreСounter = {}
+  const films = []
+  for (let movie of movies) {
+    if (!genreСounter[movie.genre]) {
+      genreСounter[movie.genre] = 1
+      films.push(movie.title)
+      continue
+    }
+    if (genreСounter[movie.genre] < limit) {
+      genreСounter[movie.genre]++
+      films.push(movie.title)
+      continue
+    }
+  }
+  return films
 }
