@@ -80,3 +80,109 @@ while (a <= 100) {
     a = b;
     b = temp;
 }
+
+
+
+// 2.14
+
+//Напиши программу, которая принимает число (от 1 до 7) и выводит соответствующий день недели (1 — Понедельник, 2 — Вторник и т. д.).
+
+const getDayOfWeek = (day) => {
+    switch (day) {
+        case 1:
+            console.log('Понедельник');
+            break;
+        case 2:
+            console.log('Вторник');
+            break;
+        case 3:
+            console.log('Среда');
+            break;
+        case 4:
+            console.log('Четверг');
+            break;
+        case 5:
+            console.log('Пятница');
+            break;
+        case 6:
+            console.log('Суббота');
+            break;
+        case 7:
+            console.log('Воскресенье');
+            break;
+        default:
+            console.log('Такого дня недели нет')
+    }
+}
+
+// Напиши функцию, которая принимает два числа и оператор (+, -, *, /) и выполняет соответствующую операцию.
+
+const calculator = (a, b, operator) => {
+    switch (operator) {
+        case '+':
+            console.log(a + b);
+            break;
+        case '-':
+            console.log(a - b)
+            break;
+        case '*':
+            console.log(a * b)
+            break;
+        case '/':
+            console.log(a / b)
+            break;
+        default:
+            console.log('Такой оператор не принимается')
+    }
+}
+
+// Напиши программу, которая принимает номер месяца (1-12) и выводит название сезона.
+
+const getSeason = (month) => {
+    switch (month) {
+        case 1:
+        case 2:
+        case 12:
+            console.log('Зима')
+            break;
+        case 3:
+        case 4:
+        case 5:
+            console.log('Весна')
+            break;
+        case 6:
+        case 7:
+        case 8:
+            console.log('Лето')
+            break;
+        case 9:
+        case 10:
+        case 11:
+            console.log('Осень')
+            break;
+        default:
+            console.log('Ошибка')
+    }
+}
+
+//Напиши функцию, которая принимает число (0-100) и выводит оценку (A, B, C, D, F).
+
+const getGrade = (score) => {
+    switch (true) {
+        case (score >= 90):
+            console.log('A');
+            break;
+        case (score >= 80):
+            console.log('B');
+            break;
+        case (score >= 70):
+            console.log('C');
+            break;
+        case (score >= 60):
+            console.log('D');
+            break;
+        default:
+            console.log('F')
+    }
+}
+getGrade(85); // "B"
