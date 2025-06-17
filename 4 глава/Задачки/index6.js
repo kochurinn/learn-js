@@ -62,3 +62,105 @@ const findCapitals = (str) => {
 }
 
 console.log(findCapitals("MaxCode")); // [0, 3]
+
+
+
+// 4. Дано положительное целое число — цена товара. Верните строку с отформатированной ценой: цифры справа налево должны быть сгруппированы по три, а группы отделены друг от друга пробелами.
+
+function formatPrice(price) {
+    const priceStr = String(price)
+    let formatPriceArr = []
+    let count = 0
+
+    for (let i = priceStr.length - 1; i >= 0; i--) {
+        if (count != 3) {
+            formatPriceArr.push(priceStr[i])
+            count++
+        } else {
+            count = 1
+            formatPriceArr.push(' ')
+            formatPriceArr.push(priceStr[i])
+        }
+    }
+    return formatPriceArr.reverse().join('')
+}
+
+console.log(formatPrice(100)); // "100"
+console.log(formatPrice(2000)); // "2 000"
+console.log(formatPrice(345678)); // "345 678"
+console.log(formatPrice(1000000)); // "1 000 000"
+console.log(formatPrice(1234567890)); // "1 234 567 890"
+
+
+
+// 5. Реализуйте функцию topWords, которая возвращает массив слов из массива words, подходящих под запрос query.
+// Функция принимает три аргумента:
+// words — массив строк;
+// query — строка, с которой должны начинаться искомые слова;
+// limit — максимальное количество слов, которое нужно вернуть.
+// Поиск должен быть регистронезависимым. Например, слово "About" подходит под запрос "ABO". В итоговом массиве слова должны быть в том же регистре, в каком были в исходном массиве.
+// Если подходящие слов больше, чем limit, то нужно вернуть первые limit подходящих слов из массива. Если меньше — вернуть все.
+
+const words = [
+  "a",
+  "able",
+  "about",
+  "absolute",
+  "accept",
+  "account",
+  "achieve",
+  "across",
+  "act",
+  "active",
+  "actual",
+  "add",
+  "address",
+  "Admit",
+  "Advertise",
+  "Affect",
+  "AFFORD",
+  "after",
+  "afternoon",
+  "again",
+  "against",
+  "age",
+  "agent",
+  "ago",
+  "agree",
+];
+
+function topWords(words, query, limit) {
+    const arr = []
+    for (let i = 0; i <= words.length - 1; i++) {
+        if (arr.length === limit) return arr
+
+        let formatWord = words[i].toLowerCase()
+        let lowerQuery = query.toLowerCase()
+
+        if (formatWord.startsWith(lowerQuery)) {
+            arr.push(words[i])
+        }
+    }
+    return arr
+}
+
+console.log(topWords(words, "Af", 3)); // ['Affect', 'AFFORD', 'after']
+console.log(topWords(words, "aga", 5)); // ['again', 'against']
+
+
+
+// 6. Реализуйте функцию max, которая принимает массив чисел и возвращает максимальное число в этом массиве.
+
+const max = (arr) => {
+    let max = arr[0]
+
+    for (let elem of arr) {
+        if (elem > max) {
+            max = elem
+        }
+    }
+
+    return max
+}
+
+console.log(max([3, 6, 1, 5])); // 6
