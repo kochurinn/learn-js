@@ -185,3 +185,73 @@ function searchValue(matrix, min) {
 console.log(searchValue(matrix, 6)); // true
 console.log(searchValue(matrix, 11)); // true
 console.log(searchValue(matrix, 200)); // false
+
+
+
+// 8. В формате массива пар задается плейлист. Пара состоит из песни и ее продолжительности.
+// Необходимо вернуть продолжительность всего плейлиста в формате HH:MM:SS.
+// Если плейлист длится меньше часа, ответ должен быть в формате MM:SS. Если хотя бы 1 час, то HH:MM:SS.
+
+const innuendo = [
+  ["Innuendo", "6:31"],
+  ["I'm Going Slightly Mad", "4:22"],
+  ["Headlong", "4:38"],
+  ["I Can't Live with You", "4:33"],
+  ["Don't Try So Hard", "3:39"],
+  ["Ride the Wild Wind", "4:42"],
+  ["All God's People", "4:21"],
+  ["These Are the Days of Our Lives", "4:15"],
+  ["Delilah", "3:35"],
+  ["The Hitman", "4:56"],
+  ["Bijou", "3:36"],
+  ["The Show Must Go On", "4:35"],
+];
+
+const blackMirrorSeason4 = [
+  ["USS Callister", "01:16:00"],
+  ["Arkangel", "52:00"],
+  ["Crocodile", "59:00"],
+  ["Hang the DJ", "51:00"],
+  ["Metalhead", "41:00"],
+  ["Black Museum", "01:09:00"],
+];
+
+const playlistDuration = (playlist) => {
+    const arrTime = playlist.map(elem => {
+        return elem[1].split(':')
+    })
+
+    let arrTimeSum = [0,0,0]
+
+    for (let i = 0; i < arrTime.length; i++) {
+        if (arrTime[i].length === 2) {
+            arrTimeSum[1] += +arrTime[i][0]
+            arrTimeSum[2] += +arrTime[i][1]
+        }
+        if (arrTime[i].length === 3) {
+            arrTimeSum[0] += +arrTime[i][0]
+            arrTimeSum[1] += +arrTime[i][1]
+            arrTimeSum[2] += +arrTime[i][2]
+        }
+    }
+
+    arrTimeSum[1] += Math.floor(arrTimeSum[2] / 60)
+    if (arrTimeSum[1] > 59) {
+        arrTimeSum[0] += Math.floor(arrTimeSum[1] / 60)
+    }
+    arrTimeSum[1] = arrTimeSum[1] % 60
+    arrTimeSum[2] = arrTimeSum[2] % 60
+
+    if (arrTimeSum[0]) {
+        return `${
+            10 > arrTimeSum[0] > 0 ? `0${arrTimeSum[0]}` : `${arrTimeSum[0]}`
+            }:${10 > arrTimeSum[1] > 0 ? `0${arrTimeSum[1]}` : `${arrTimeSum[1]}`}:${ 
+            10 > arrTimeSum[2] > 0 ? `0${arrTimeSum[2]}` : `${arrTimeSum[2]}`}`
+    } else {
+        return `${10 > arrTimeSum[1] > 0 ? `0${arrTimeSum[1]}` : `${arrTimeSum[1]}`}:${
+            10 > arrTimeSum[2] > 0 ? `0${arrTimeSum[2]}` : `${arrTimeSum[2]}`}`
+    }
+}
+
+console.log(playlistDuration(innuendo)); // "53:43"
+console.log(playlistDuration(blackMirrorSeason4)); // "05:48:00"
