@@ -256,3 +256,60 @@ const playlistDuration = (playlist) => {
 console.log(playlistDuration(innuendo)); // "53:43"
 console.log(playlistDuration(blackMirrorSeason4)); // "05:48:00"
 
+
+
+// 9. Как работают кнопки лайка и дислайка на ютубе? Изначально ни одна из них не выбрана. Если вы нажимаете на кнопку лайк, то она становится активной. Если вы нажмете на нее еще раз, то она отожмется и активной кнопки не будет.
+// Если изначально нажать на лайк, а потом на дислайк, то активной будет только кнопка дислайка. Кнопка лайка будет неактивной, т.к. активной может быть только одна кнопка.
+// Определите, какая кнопка будет выбрана после серии нажатий. Считаем, что изначально ни одна кнопка не выбрана.
+
+function likeOrDislike(buttons) {
+    if (buttons.length === 0) return 'Nothing'
+    if (buttons.length === 1) return buttons[0]
+
+    let count = 1
+    for (let i = 1; i < buttons.length; i++) {
+        if (buttons[i - 1] === buttons[i]) {
+            count++
+        }
+        if (buttons[i - 1] !== buttons[i]) {
+            count = 1
+        }
+    }
+
+    return count % 2 === 0 ? 'Nothing' : buttons.at(-1)
+}
+
+console.log(likeOrDislike(["Dislike"])); // "Dislike"
+console.log(likeOrDislike(["Like", "Like"])); // "Nothing"
+console.log(likeOrDislike(["Dislike", "Like"])); // "Like"
+console.log(likeOrDislike(["Like", "Dislike", "Dislike"])); // "Nothing"
+
+
+
+// 10. Дан массив чисел. Необходимо найти индекс элемента такого, что сумма чисел слева от него равна сумме чисел справа от него. Если такого элемента нет, вернуть -1.
+
+function pivotIndex(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        let leftSum = 0
+        let rightSum = 0
+        let toggle = 0
+
+        for (let j = 0; j < arr.length; j++) {
+            if (j === i) {
+                toggle = 1
+                continue
+            }
+
+            if (toggle === 0) {
+                leftSum += arr[j]
+            } else {
+                rightSum += arr[j]
+            }
+        }
+
+        if (leftSum === rightSum) {
+            return i
+        }
+    }
+    return -1
+}
