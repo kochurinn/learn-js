@@ -93,3 +93,25 @@ const isPalindrome = (str) => {
 console.log(isPalindrome("шалаш"))
 console.log(isPalindrome("анна"))
 console.log(isPalindrome("hello"))
+
+
+
+// Глубокий подсчёт количества элементов в массиве
+
+function countElements(arr) {
+  let count = 0;
+  
+  for (const element of arr) {
+    if (Array.isArray(element)) {
+      count += countElements(element); // Рекурсивный вызов для вложенного массива
+    } else {
+      count += 1; // Увеличиваем счётчик для обычного элемента
+    }
+  }
+  
+  return count;
+}
+
+countElements([1, [2, [3, 4], 5]]) // 5 (1, 2, 3, 4, 5)
+countElements([[[]]])              // 0 (пустые массивы не считаются)
+countElements([10, [20, [30]]])    // 3 (10, 20, 30)
