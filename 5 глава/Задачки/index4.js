@@ -64,3 +64,32 @@ const printList = (list) => {
 }
 
 printList(list)
+
+
+// Вывод односвязного списка в обратном порядке.
+
+const printListFromEnd = (list) => {
+  if (list.next) {
+    printList(list.next)
+  }
+  console.log(list.value)
+}
+
+printList(list)
+
+
+
+// Проверка на палиндром
+
+const isPalindrome = (str) => {
+  if (str.length <= 1) return true
+  if (str[0] === str.at(-1)) {
+    return isPalindrome(str.slice(1, -1))
+  } else {
+    return false
+  }
+}
+
+console.log(isPalindrome("шалаш"))
+console.log(isPalindrome("анна"))
+console.log(isPalindrome("hello"))
