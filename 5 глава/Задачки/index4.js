@@ -115,3 +115,63 @@ function countElements(arr) {
 countElements([1, [2, [3, 4], 5]]) // 5 (1, 2, 3, 4, 5)
 countElements([[[]]])              // 0 (пустые массивы не считаются)
 countElements([10, [20, [30]]])    // 3 (10, 20, 30)
+
+
+
+// Поиск максимального числа в массиве
+
+const findMax = (arr) => {
+  if (arr.length === 0) return 0
+  if (arr.length === 1) return arr[0]
+  
+  return Math.max(arr[0], findMax(arr.slice(1)))
+}
+
+findMax([1, 5, 3, 9, 2]) // 9
+findMax([-10, -5, -20])   // -5
+
+
+
+// Генератор всех подмножеств (комбинаций)
+
+function getSubsets(arr) {
+  if (arr.length === 0) return [[]]; // Базовый случай
+  
+  const first = arr[0];
+  const subsetsWithoutFirst = getSubsets(arr.slice(1));
+  const subsetsWithFirst = subsetsWithoutFirst.map(subset => [first, ...subset]);
+  
+  return [...subsetsWithoutFirst, ...subsetsWithFirst];
+}
+
+getSubsets([1,1]) // [ [], [ 1 ], [ 1 ], [ 1, 1 ] ]
+getSubsets([1, 2]) // [[], [1], [2], [1, 2]]
+getSubsets([9])    // [[], [9]]
+
+
+
+// Разворот строки
+
+const reverseString = (str) => {
+  if (str.length <= 1) return str
+  
+  let lastSymbol = str.slice(-1)
+  return lastSymbol + reverseString(str.slice(0, str.length - 1))
+}
+
+reverseString("hello") // "olleh"
+reverseString("a")     // "a"
+reverseString('12345') // '54321'
+
+
+
+// Сумма цифр числа 
+
+const sumDigits = (num) => {
+  num = Math.abs(num); // Работаем с модулём, чтобы избежать проблем с отрицательными числами
+  if (num < 10) return num; // Базовый случай: одна цифра
+  return (num % 10) + sumDigits(Math.floor(num / 10)); // Последняя цифра + рекурсия для остатка
+};
+
+sumDigits(123) // 6 (1 + 2 + 3)
+sumDigits(9045) // 18 (9 + 0 + 4 + 5)
